@@ -1050,26 +1050,37 @@ footer p{max-width:70ch}
   </div>
 
   <div class="plate bleed">
-    <p class="plate-t">What "9,360 items" is actually made of</p>
-    <p class="plate-s">EQLBase, 31 Aug 2026 · verified share is not published, and is drawn here as unknown</p>
+    <p class="plate-t">What "9,360 items" is actually made of — measured</p>
+    <p class="plate-s">Source: eqlbase.com/data/verified.json, generatedAt 2026-08-28 · the file EQLBase's own item browser fetches to power its "✓ EQL Verified" filter</p>
     <div class="bars">
-      <div class="bar-r"><div class="bar-l">EQLBase records</div><div class="bar-t"><div class="bar-f hatch" style="width:100%"></div></div><div class="bar-v">9,360</div></div>
-      <div class="bar-r me"><div class="bar-l">EQL Source, verified</div><div class="bar-t"><div class="bar-f" style="width:4.65%"></div></div><div class="bar-v">435</div></div>
+      <div class="bar-r"><div class="bar-l">EQLBase<br><span class="mono" style="font-size:10px;color:var(--faint)">records advertised</span></div><div class="bar-t"><div style="display:flex;height:100%"><div class="bar-f" style="width:2.66%;min-width:4px"></div><div class="bar-f hatch" style="width:97.34%;border-radius:0"></div></div></div><div class="bar-v">9,360</div></div>
+      <div class="bar-r"><div class="bar-l">EQLBase<br><span class="mono" style="font-size:10px;color:var(--faint)">verified in Legends</span></div><div class="bar-t"><div class="bar-f" style="width:2.66%"></div></div><div class="bar-v">249</div></div>
+      <div class="bar-r me"><div class="bar-l">EQL Source<br><span class="mono" style="font-size:10px">verified</span></div><div class="bar-t"><div class="bar-f" style="width:4.65%"></div></div><div class="bar-v">435</div></div>
     </div>
-    <p class="plate-s" style="margin:var(--s3) 0 0">The hatch is the honest rendering.
-      A solid bar would assert a verified count nobody has published — which is the
-      error the original chart made, drawn the other way round.</p>
+    <p class="plate-s" style="margin:var(--s3) 0 0">Solid is verified; hatch is
+      unverified baseline. <b style="color:var(--ink)">2.66% of EQLBase's advertised
+      item count is flagged as observed in Legends.</b> The red bar is longer than the
+      blue one: by each site's own verification flag, EQL Source carries about 1.75×
+      EQLBase's verified items while advertising a number 25× smaller. Cross-check —
+      EQLBase's sitemap holds 2,935 item URLs against 9,360 advertised, while its spells
+      are 1,449 URLs against 1,448 advertised, which is what proves the sitemap is not
+      truncated.</p>
   </div>
 
   <h3>What the correction does not rescue</h3>
   <p class="col">Being right about the unit does not make the position safe, and I would
     be doing you no favours by trading one bad number for a comfortable one.</p>
   <ul class="moves">
-    <li><h4>The true denominator is still unknown — to me, and possibly to you</h4>
-      <p>Nobody in this audit established how many items actually exist in EverQuest
-        Legends. Gnoll Guard's disclosure implies a real corpus in the low thousands.
-        Until that denominator is published, "435" and "9,360" are both unanchored, and
-        the side with the bigger unanchored number wins by default.</p></li>
+    <li><h4>The true denominator — since measured, and it is a bound, not a number</h4>
+      <p><s>Nobody in this audit established how many items actually exist in EverQuest
+        Legends.</s> Measured 31 Aug: the corpus <strong>cannot</strong> be established
+        precisely from public surfaces — no site publishes a client-derived total — but
+        it can be bounded. <strong>Floor ≥ 1,470</strong>, from Gnoll Guard's own
+        arithmetic (502 missing + 782 statless + 186 disagreeing, all items they had
+        already captured). <strong>Soft ceiling ~3,700</strong>, from two independent
+        mid-range signals landing within 25% of each other: EQLBase's 2,935 built item
+        pages and this site's own 3,663-item planner. 9,360 is not in that range and is
+        not a corpus figure.</p></li>
     <li class="key"><h4>Your own planner holds 3,663 items</h4>
       <p>This is the question I cannot answer from outside, and it decides everything
         below. If those 3,663 survived the same verification the 435 did, then your
