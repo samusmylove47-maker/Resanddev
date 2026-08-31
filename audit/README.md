@@ -12,6 +12,7 @@ MMORPG genre.
 ## Headline findings
 
 - **4.7%** of the known item space is in the Index (435 of ~9,360).
+  **Corrected in §09** — see below; this compared unlike units.
 - **85.4%** of the homepage payload is inline SVG decoration (206,316 of 241,709 bytes).
 - **0** `<img>` elements on the homepage of an MMORPG site.
 - **7** direct competitors, none older than the game itself (launched 28 Jul 2026).
@@ -22,6 +23,19 @@ MMORPG genre.
 EQL Source has the best sourcing discipline and the worst coverage in its field.
 Its five-tier sourcing standard has been treated as a reason to publish less; it is
 in fact the only mechanism that would let it publish *more* than any rival, honestly.
+
+## Addendum (§09) — the record/verified distinction
+
+The audit's headline coverage finding was **wrong as framed**. EQLBase's 9,360 is a
+count of *records* (largely classic-EverQuest baseline, verified share unpublished);
+435 is a count of *verified items*. Competitors' own disclosures corroborate this —
+Gnoll Guard admitted on 12 Aug 2026 to serving stats "scraped from a classic-EverQuest
+reference wiki", with 186 items whose stats **disagreed with the game**.
+
+The coverage chart carries a dated correction stamp rather than being rewritten; the
+blind audit is preserved as delivered. §09 covers what the correction does not rescue
+(the true denominator is still unknown, and the 3,663-item planner is an open question)
+and a five-move strategy for competing on a unit that can be won.
 
 ## Method
 

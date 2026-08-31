@@ -50,3 +50,64 @@ Items: 435 / 9,360 = 4.7%.  Zones: 13 / 568 = 2.3%.
 - Warcraft Logs / Archon: log upload -> analysis -> guides -> recruitment flywheel
 - FFXIV: Teamcraft / Garland Tools / Etro / FFLogs
 - poe.ninja: live economy + ladder-mined builds
+
+---
+
+# ADDENDUM — 31 Aug 2026: the record/verified distinction
+
+## Correction to F02
+The audit compared **435 verified items** against **EQLBase's 9,360** and derived
+"4.7% coverage". These are unlike units. 9,360 is a count of RECORDS, largely
+classic-EverQuest baseline imported wholesale, of which an unpublished fraction is
+confirmed in Legends. The derived percentage is meaningless. F02 overstates the gap.
+
+## Corroborating evidence (competitors' own disclosures)
+
+### Gnoll Guard — news, dated 2026-08-12
+> "our item pages have been serving stats scraped from a classic-EverQuest reference
+> wiki instead of the data we captured from Legends itself."
+
+Their own figures:
+- 502 items that exist in Legends were missing from the site entirely
+- 782 items showed no stats at all, when they had the real numbers the whole time
+- **186 items showed stats that disagreed with what the game actually reports**
+- Follow-up 2026-08-16: 27 items affected by misread penalty stats
+  (e.g. Torrid Corruptor CHA -30, Amulet of Necropotence HP -100)
+- Still outstanding: "Class and race restrictions still come from the scrape."
+
+Their fix: "The item pages now read captured in-game data first and fall back to the
+wiki only when we haven't seen an item ourselves. Where the two disagree, the game wins."
+(Self-disclosed and self-corrected — creditable, and should be named as such.)
+
+### EQLBase
+> "Baseline records remain labeled until Legends evidence confirms them."
+
+Homepage advertises `9,360 Items · 1,448 Spells · 568 Zones · 560 Combos`
+with NO published breakdown of verified vs baseline. Has an `✓ EQL Verified`
+filter internally. Self-describes as "VERY early alpha."
+
+### EQL Tools
+Notes that importing another database fails on this server "because IDs differ,
+inspect numbers differ, and some Live commands simply do not exist."
+
+## What the correction does NOT rescue
+1. **True denominator unknown.** Nobody established how many items actually exist in
+   EQL. Gnoll Guard's numbers imply a real corpus in the low thousands.
+2. **50 Upgrades holds 3,663 items.** OPEN QUESTION for the site owner: were these
+   verified to the same standard as the 435? If yes -> headline number is 3,663 and the
+   Index publishes 12% of the verified corpus (plumbing fix). If no -> the planner does
+   internally what this addendum criticises externally.
+3. **An empty search result is still an empty result** to the user, whatever its cause.
+
+## Strategy: change the unit
+1. Lead with the deletions ("11,000+ removed as not present in Legends") — a bigger
+   number than 9,360, and one no rival can claim.
+2. Report a fraction with a stated denominator, never a bare count.
+3. Publish a falsification rate ("The Concordance"): sample n entries per rival, check
+   against the game, publish disagreement rates + methodology, monthly.
+   GUARDRAILS: include your own error rate; give right of reply before publishing;
+   credit self-disclosure. Without all three it is a hit piece and backfires.
+4. Own the extraction surface: title, meta description, first ~200 words, llms.txt,
+   schema.org Dataset (measurementTechnique / variableMeasured), consider ClaimReview.
+   Canonical `/why-our-number-is-smaller` page written for verbatim quotation.
+5. Name the unit — "records" vs "verified entries" — until the community adopts it.

@@ -157,6 +157,19 @@ p{margin:0 0 1.15em}
   font-variant-numeric:tabular-nums;min-width:62px;text-align:right}
 .bar-r.me .bar-v{color:var(--ink);font-weight:600}
 
+/* A correction stamped onto the plate rather than an edit that hides it. */
+.corr{font-family:"IBM Plex Mono",monospace;font-size:11.5px;line-height:1.65;
+  color:var(--mut);border-left:2px solid var(--amber);
+  padding:8px 0 8px 13px;margin:var(--s3) 0 0}
+.corr b{color:var(--amber)}
+.corr em{color:var(--ink);font-style:normal}
+
+/* Unknown rendered AS unknown: a hatch, not a guess. The site's own principle. */
+.hatch{background-color:transparent;
+  background-image:repeating-linear-gradient(45deg,
+    var(--rule2) 0 4px, transparent 4px 9px);
+  box-shadow:inset 0 0 0 1px var(--rule2)}
+
 /* split bar (payload) */
 .split{display:flex;height:46px;gap:2px;margin:var(--s2) 0 12px}
 .split div{display:flex;align-items:center;padding:0 12px;
@@ -565,6 +578,10 @@ footer p{max-width:70ch}
     </div>
     <p class="plate-s" style="margin:var(--s3) 0 0">Your own planner holds eight times
       what your own Index exposes. The data exists. It is on the wrong domain.</p>
+    <p class="corr"><b>Correction, 31 Aug 2026 —</b> this chart compares unlike units.
+      EQLBase's 9,360 is a count of <em>records</em>, an unpublished fraction of which
+      are confirmed in Legends; 435 is a count of <em>verified items</em>. The finding
+      it supports (F02) overstates the gap. See §09.</p>
   </div>
 
   <div class="plate bleed">
@@ -897,6 +914,166 @@ footer p{max-width:70ch}
       alternatives. You are currently in second place on craft and last place on
       everything that decides it. <em class="hl">That is a fixable position, and it will
       not be fixable for long.</em></p>
+  </div>
+</section>
+
+
+<!-- ═══ 09 ADDENDUM ═══ -->
+<section>
+  <div class="sec-head"><span class="n">09</span><h2>Addendum — the number war</h2></div>
+  <p class="col lede">Added after the audit was delivered, in response to a challenge
+    from the site's author. The blind audit above is left exactly as written; this
+    section corrects one finding and answers the strategic question underneath it.</p>
+
+  <div class="big">
+    <div class="lab">Correction</div>
+    <p class="disp">F02 compared unlike units, and it was the loudest thing in this
+      document.</p>
+    <p>I set 435 verified items against EQLBase's 9,360 and called the result 4.7%
+      coverage. That is not a like-for-like comparison. <strong>9,360 is a count of
+      records</strong> — largely classic-EverQuest baseline data imported wholesale —
+      of which an <em>unpublished</em> fraction has been confirmed to exist in Legends.
+      <strong>435 is a count of verified items.</strong> Dividing one by the other
+      produces a number that means nothing, and I led with it.</p>
+  </div>
+
+  <h3>The evidence, in competitors' own words</h3>
+  <p class="col">This is not a charitable reading offered on request. It is what the
+    field says about itself.</p>
+
+  <div class="finding">
+    <div class="fnum">E01</div>
+    <div><h3>Gnoll Guard, 12 August 2026<span class="chip c-crit">Self-reported</span></h3>
+      <p>A competing EQL item database published this about its own pages:
+        <em>"our item pages have been serving stats scraped from a classic-EverQuest
+        reference wiki instead of the data we captured from Legends itself."</em></p>
+      <p class="ev"><b>Their own figures:</b> 502 items that exist in Legends were
+        missing entirely · 782 items showed no stats when the real numbers were on hand ·
+        <b>186 items showed stats that disagreed with what the game actually reports.</b>
+        A follow-up on 16 Aug found 27 more with misread penalty stats. Class and race
+        restrictions, they note, still come from the scrape.</p>
+      <p>Their fix — read captured data first, fall back to the wiki, and
+        <em>"where the two disagree, the game wins"</em> — is the correct fix, published
+        honestly. It is also a precise description of the failure mode you deleted
+        eleven thousand rows to avoid.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">E02</div>
+    <div><h3>EQLBase publishes the total and withholds the split<span class="chip c-ser">Structural</span></h3>
+      <p>Its own words: <em>"Baseline records remain labeled until Legends evidence
+        confirms them."</em> So the site knows the distinction and encodes it internally
+        with an <span class="mono">✓ EQL Verified</span> filter.</p>
+      <p>But the homepage advertises <span class="mono">9,360 Items · 1,448 Spells ·
+        568 Zones</span> with <strong>no breakdown whatsoever</strong> of how many are
+        confirmed. The number a visitor is recruited by is the number that has not been
+        checked. It also self-describes as "VERY early alpha."</p></div>
+  </div>
+
+  <div class="plate bleed">
+    <p class="plate-t">What "9,360 items" is actually made of</p>
+    <p class="plate-s">EQLBase, 31 Aug 2026 · verified share is not published, and is drawn here as unknown</p>
+    <div class="bars">
+      <div class="bar-r"><div class="bar-l">EQLBase records</div><div class="bar-t"><div class="bar-f hatch" style="width:100%"></div></div><div class="bar-v">9,360</div></div>
+      <div class="bar-r me"><div class="bar-l">EQL Source, verified</div><div class="bar-t"><div class="bar-f" style="width:4.65%"></div></div><div class="bar-v">435</div></div>
+    </div>
+    <p class="plate-s" style="margin:var(--s3) 0 0">The hatch is the honest rendering.
+      A solid bar would assert a verified count nobody has published — which is the
+      error the original chart made, drawn the other way round.</p>
+  </div>
+
+  <h3>What the correction does not rescue</h3>
+  <p class="col">Being right about the unit does not make the position safe, and I would
+    be doing you no favours by trading one bad number for a comfortable one.</p>
+  <ul class="moves">
+    <li><h4>The true denominator is still unknown — to me, and possibly to you</h4>
+      <p>Nobody in this audit established how many items actually exist in EverQuest
+        Legends. Gnoll Guard's disclosure implies a real corpus in the low thousands.
+        Until that denominator is published, "435" and "9,360" are both unanchored, and
+        the side with the bigger unanchored number wins by default.</p></li>
+    <li class="key"><h4>Your own planner holds 3,663 items</h4>
+      <p>This is the question I cannot answer from outside, and it decides everything
+        below. If those 3,663 survived the same verification the 435 did, then your
+        headline number is 3,663, your Index is publishing 12% of your own verified
+        corpus, and the fix is plumbing rather than research. If they did not, then the
+        planner is doing internally what this section criticises externally. One of
+        those is a very good day's work. The other is F06 with worse implications.</p></li>
+    <li><h4>An empty result is still an empty result</h4>
+      <p>The player who searches for a real item and finds nothing does not learn that
+        you were being rigorous. They learn that the site does not have it. Correctness
+        explains the gap; it does not close it, and it does not retain the user.</p></li>
+  </ul>
+
+  <h3>The strategy: stop competing on a unit you must lose</h3>
+  <p class="col">You are reporting a <strong>numerator with no denominator</strong>, in
+    a category where the only visible metric rewards the thing you deliberately refused
+    to do. That is not a marketing problem to be solved with better phrasing. It is the
+    wrong unit. Change the unit and you hold the largest number on the field.</p>
+
+  <ul class="moves">
+    <li class="key"><span class="tag">Move 01</span><h4>Lead with the deletions</h4>
+      <p>Your instinct is right and it is the strongest number you own.
+        <span class="mono">"11,000+ classic-EverQuest entries removed as not present in
+        Legends"</span> is a <em>bigger</em> number than 9,360. It is earned, it is
+        verifiable from your own changelog, and no rival can match it without conceding
+        why they should have. Publish the exact figure, the date, and the method.</p></li>
+    <li class="key"><span class="tag">Move 02</span><h4>Report a fraction, never a count</h4>
+      <p><span class="mono">"435 of 447 items in the surveyed zones — 97%"</span> is
+        unassailable in a way that "435 items" never will be. A count invites the
+        comparison you lose; a percentage with a stated denominator invites the
+        comparison nobody else can even attempt, because none of them can name their
+        denominator.</p></li>
+    <li class="key"><span class="tag">Move 03</span><h4>Publish the falsification rate — The Concordance</h4>
+      <p>Sample <span class="mono">n</span> entries at random from each EQL database,
+        check each against the game, and publish the disagreement rate with full
+        methodology, dates and per-entry evidence. Re-run monthly. This is your sourcing
+        standard pointed outward, and it is the single move that converts their headline
+        number from an asset into a liability — permanently, and without you ever having
+        to argue about it again.</p>
+      <p>Three rules make it an institution rather than a hit piece, and without all
+        three it will backfire on you specifically, because your credibility is the
+        entire product: <strong>publish your own error rate in the same table</strong>;
+        give every site advance notice and a correction window before publishing; and
+        lead with the fact that Gnoll Guard found and disclosed its own problem, which
+        is creditable behaviour and should be named as such. You already flagged unease
+        about criticising another project publicly. Method, right of reply, and self-inclusion
+        are what separate a benchmark from an attack.</p></li>
+    <li class="key"><span class="tag">Move 04</span><h4>Own the extraction surface</h4>
+      <p>You are right that the qualifying judgement is now often made by a machine
+        reading a snippet. That surface is small and specific, and you control all of it:
+        the <span class="mono">&lt;title&gt;</span>, the meta description, the first
+        ~200 words of the page, and structured data. Your description currently sells
+        method and carries no number at all.</p>
+      <p>Concretely: put the deletion figure in the meta description and the opening
+        sentence, in short declarative clauses that survive being chunked. Add
+        <span class="mono">llms.txt</span> at the root. Mark the database up as
+        schema.org <span class="mono">Dataset</span> with
+        <span class="mono">measurementTechnique</span> and
+        <span class="mono">variableMeasured</span> — and consider
+        <span class="mono">ClaimReview</span>, which exists precisely to encode
+        fact-checked claims and maps onto your five tiers almost exactly. Nobody in
+        games uses it. Then write one canonical page — <span class="mono">/why-our-number-is-smaller</span>
+        — numbers first, no preamble, built to be quoted verbatim by a model that reads
+        three paragraphs and moves on.</p></li>
+    <li><span class="tag">Move 05</span><h4>Name the unit and make the field adopt it</h4>
+      <p>Say <strong>records</strong> and <strong>verified entries</strong> everywhere,
+        relentlessly, until the community says it too. Whoever defines the vocabulary
+        wins every future comparison before it starts. Wowhead never had to defend its
+        count because it defined what counting meant.</p></li>
+  </ul>
+
+  <div class="big">
+    <div class="lab">The revised position</div>
+    <p class="disp">You are not behind on coverage. You are behind on legibility.</p>
+    <p>The audit's other eleven findings stand unchanged — the missing icons, the 85.4%
+      decorative payload, the absent Discord, the unmeasured traffic, the off-domain
+      tools, the names that explain nothing. But F02 was wrong, and it was wrong in the
+      direction that would have pushed you to abandon the one discipline that makes this
+      site worth defending. Had you taken my advice as written, you would have
+      re-imported the eleven thousand rows you were right to delete.</p>
+    <p>Publish the denominator, publish the deletions, publish the error rates — yours
+      included — and the number stops being an argument you are losing and becomes the
+      argument you are winning.</p>
   </div>
 </section>
 
