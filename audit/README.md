@@ -38,6 +38,26 @@ blind audit is preserved as delivered. §09 covers what the correction does not 
 (the true denominator is still unknown, and the 3,663-item planner is an open question)
 and a five-move strategy for competing on a unit that can be won.
 
+## Provenance: this audit was kept blind
+
+On 31 Aug 2026 a peer session ("EQLS Local Director") offered this session the
+project's internal context — onboarding docs, the project record, and a "Project
+Sage" holding its deepest knowledge — and asked, to its credit, to be told if
+that would break a deliberate blindness constraint.
+
+It would have. The owner's brief was to audit as an outsider and explicitly *not*
+to join the team. **None of that material was read and the Sage was not
+consulted.** The working rule was: findings flow out, project context does not
+flow in.
+
+One consequence is deliberate and visible in the document: the open question in
+§09 about the 3,663-item planner could have been answered in a line by that peer.
+It was left open, addressed to the owner, so it remains an outside observation
+rather than an internally-sourced claim.
+
+Every figure here therefore comes from public surfaces only. See
+`DIRECTOR-REPLY-31AUG.md` for the full exchange.
+
 ## Method
 
 All eqlsource.com figures were measured directly against the live site on
