@@ -7,6 +7,7 @@ MMORPG genre.
 | File | What it is |
 |---|---|
 | `norrath-unmeasured.html` | The brief. Publishable page; also the deliverable artifact. |
+| `DENOMINATOR-31AUG.md` | **The denominator, measured.** EQLBase flags 249 of its advertised 9,360 items as verified in Legends — 2.66%. True corpus bounded at 1,470–3,700; not establishable precisely from public surfaces. |
 | `AUDIT-EVIDENCE.md` | Raw evidence log — every measured figure and its provenance. |
 | `EQL-Source-Audit.html` | **Standalone, unpublished copy.** Complete HTML document — open it directly in any browser, no server and no publishing involved. This is the file to hand to someone else. |
 
