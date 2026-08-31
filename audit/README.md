@@ -8,6 +8,8 @@ MMORPG genre.
 |---|---|
 | `norrath-unmeasured.html` | The brief. Publishable page; also the deliverable artifact. |
 | `DENOMINATOR-31AUG.md` | **The denominator, measured.** EQLBase flags 249 of its advertised 9,360 items as verified in Legends — 2.66%. True corpus bounded at 1,470–3,700; not establishable precisely from public surfaces. |
+| `FIRSTPAINT-31AUG.md` | **First paint, measured.** Reordering the hero SVG: no effect (−14 ms, p=0.49). Removing the render-blocking stylesheet: 9.3× faster. 2.19 MB of autoplay video is ~80% of load time. |
+| `serve.py`, `measure.sh` | The throttled-origin rig and measurement harness, so the above is reproducible. |
 | `AUDIT-EVIDENCE.md` | Raw evidence log — every measured figure and its provenance. |
 | `EQL-Source-Audit.html` | **Standalone, unpublished copy.** Complete HTML document — open it directly in any browser, no server and no publishing involved. This is the file to hand to someone else. |
 
