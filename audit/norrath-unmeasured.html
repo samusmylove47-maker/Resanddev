@@ -471,8 +471,22 @@ footer p{max-width:70ch}
         two autoplaying MP4 trailers (971,771 B and 859,203 B) behind two JPEG posters
         (180,943 B and 179,156 B). That is 55× the compressed HTML. The heavy thing on
         this page was never the SVG.</p>
+      <p class="corr" style="border-left-color:var(--verdigris)"><b>Resolved by
+        measurement, 31 Aug 2026 — and the defect is neither weight nor order.</b>
+        Mirrored the page and every asset, served them at 600 kbit/s under production's
+        compression level, and measured first paint over four variants, n=30 per arm on
+        the two that mattered. Moving the hero SVG after the text — the remedy proposed
+        against this finding — produced <b>−14 ms at p=0.49: no effect.</b> Removing the
+        render-blocking stylesheet round trip produced <b>−962 ms, 9.3× faster,
+        p&lt;0.001.</b> Removing the two autoplaying videos produced <b>−426 ms</b> and
+        cut full load from 11.6 s to 2.3 s. Nothing paints until
+        <span class="mono">site.css</span> arrives, so it makes no difference whether the
+        headline sits at byte 5,046 or 26,703. <b>The real cost is a render-blocking
+        stylesheet and 2.19 MB of autoplay video</b> — not the path data, which
+        compresses 10.6:1.</p>
       <p class="ev"><b>Measured:</b> 241,709 B uncompressed · 206,316 B SVG · 16
-        elements · largest 21,607 B / 96 paths · <b>39,547 B transferred (br)</b> ·
+        elements · <b>39,547 B transferred</b> — Cloudflare serves brotli <b>q4</b>
+        (q4 predicts live within 15 bytes; q11 would be 27,281 and is not what ships) ·
         plus 2,191,073 B of media. Composition independently confirmed from the
         repository by a second party using a different instrument; all four figures
         matched exactly.</p></div>
