@@ -76,6 +76,8 @@ a{color:var(--ink);text-decoration-color:var(--rule2);text-underline-offset:3px}
 a:hover{text-decoration-color:var(--redline)}
 :focus-visible{outline:2px solid var(--redline);outline-offset:3px;border-radius:2px}
 strong{color:var(--ink);font-weight:600}
+s{color:var(--faint);text-decoration:line-through;
+  text-decoration-color:var(--redline);text-decoration-thickness:1px}
 em.hl{font-style:normal;color:var(--ink);font-weight:600;
   border-bottom:2px solid var(--redline);
   box-decoration-break:clone;-webkit-box-decoration-break:clone}
@@ -298,7 +300,7 @@ footer p{max-width:70ch}
     <div class="stats bleed">
       <div class="stat"><b>4.7%</b><span>of the known item space is in your Index</span></div>
       <div class="stat"><b>85.4%</b><span>of your homepage bytes are decoration</span></div>
-      <div class="stat"><b>0</b><span>images on the homepage of an MMO site</span></div>
+      <div class="stat"><b>0</b><span>item icons across 441 item pages and the 435-row Index</span></div>
       <div class="stat q"><b>7</b><span>direct rivals, all younger than 60 days</span></div>
       <div class="stat q"><b>34</b><span>days to establish the default</span></div>
     </div>
@@ -407,21 +409,37 @@ footer p{max-width:70ch}
   <div class="finding">
     <div class="fnum">F01</div>
     <div><h3>You are invisible in a genre that runs on icons<span class="chip c-crit">Critical</span></h3>
-      <p>There is not one <span class="mono">&lt;img&gt;</span> element on your homepage.
-        Not an item icon, not a spell icon, not a mob portrait, not a screenshot, not a
-        piece of character art. An MMO player's memory is <em>visual</em> — they recall
-        the orange sword icon long before they recall "A Dark Reaver." Wowhead's entire
-        interface is an icon grid. Every one of your seven rivals ships item icons.
-        You ship line drawings.</p>
+      <p><s>There is not one <span class="mono">&lt;img&gt;</span> element on your
+        homepage. Not an item icon, not a spell icon, not a mob portrait, not a
+        screenshot, not a piece of character art.</s> An MMO player's memory is
+        <em>visual</em> — they recall the orange sword icon long before they recall
+        "A Dark Reaver." Wowhead's entire interface is an icon grid. Every one of your
+        seven rivals ships item icons.</p>
+      <p class="corr"><b>Correction, 31 Aug 2026 —</b> the struck sentences are wrong.
+        I tested for <span class="mono">&lt;img&gt;</span> and reported the result as if
+        I had tested for imagery. Your homepage carries <em>two autoplaying
+        <span class="mono">&lt;video&gt;</span> elements</em> — 1.83 MB of gameplay
+        footage of Sky Ledger and Auras — behind <em>two JPEG posters</em> totalling
+        360,099 B. Those posters are screenshots. Found on re-verification, by me, after
+        a peer independently confirmed the null and I went looking for the way my own
+        method could have produced it.</p>
+      <p>What survives is narrower and, I think, more damning: <strong>the imagery is
+        all in the marketing and none of it is in the data.</strong> You can evidently
+        produce polished video of your own tools. None of that capability reaches the
+        surfaces players actually use.</p>
       <p>This is the single highest-leverage fix available to you, and — this is the
         maddening part — <strong>you already own the hard half of it</strong>. Your
         <span class="mono">_build/palette.py</span> already opens the game's
         <span class="mono">.s3d</span> archives and decodes DXT1 texture blocks. Icons
         live in those same archives. The pipeline that proved your palette was the wrong
         temperature is the pipeline that can emit four thousand WebP icons in one pass.</p>
-      <p class="ev"><b>Measured:</b> 0 <span class="mono">&lt;img&gt;</span> tags on
-        <span class="mono">/</span>. One on a typical item page — a floor-plan locator,
-        which is a genuinely good idea nobody else has.</p></div>
+      <p class="ev"><b>Re-measured 31 Aug:</b> homepage — 0
+        <span class="mono">&lt;img&gt;</span>, 0 <span class="mono">&lt;picture&gt;</span>,
+        0 CSS <span class="mono">url()</span>, but <b>2 <span class="mono">&lt;video&gt;</span>
+        + 2 JPEG posters</b>. · <span class="mono">tools/index-search.html</span> (the
+        Index, 225,571 B) — <b>0 images of any kind</b> across 435 rows. · Item pages —
+        exactly 1 image each, the floor-plan locator SVG, which is a genuinely good idea
+        nobody else has. <b>0 item icons anywhere on the site.</b></p></div>
   </div>
 
   <div class="finding">
@@ -442,18 +460,30 @@ footer p{max-width:70ch}
 
   <div class="finding">
     <div class="fnum">F03</div>
-    <div><h3>Six sevenths of your homepage is decoration<span class="chip c-crit">Critical</span></h3>
+    <div><h3>Six sevenths of your homepage is decoration<span class="chip c-warn">Warning</span></h3>
       <p>The homepage is 241,709 bytes. Sixteen inline SVGs account for
         <strong>206,316 of them — 85.4%</strong>. The hero alone is 21,607 bytes of
         hand-authored path data across 96 paths. The actual text content of the page,
         the part a human reads, is roughly four kilobytes.</p>
-      <p>You are spending fifty bytes of decoration for every byte of value, on the one
-        page where a stranger decides whether to stay. On a phone on hotel wifi that
-        is a blank screen for several seconds — and mobile is where a Discord link gets
-        opened.</p>
-      <p class="ev"><b>Measured:</b> 241,709 B total · 206,316 B SVG · 16 elements ·
-        largest 21,607 B / 96 paths. The background of this page you are reading is a
-        canvas, drawn by about forty lines of JavaScript, and weighs nothing.</p></div>
+      <p><s>You are spending fifty bytes of decoration for every byte of value… on a
+        phone on hotel wifi that is a blank screen for several seconds.</s></p>
+      <p class="corr"><b>Correction, 31 Aug 2026 — the composition figure holds, the
+        consequence does not.</b> I asserted a load-time impact and never measured
+        transfer. The page is served over HTTP/2 with Brotli: <b>241,709 B becomes
+        39,547 B on the wire</b>, a 6.1:1 ratio, because repeated SVG path data is
+        exactly what compresses best. 39.5 KB is not a blank screen. Severity drops from
+        Critical to Warning, and the reason changes: this is an authoring, maintenance
+        and DOM-size cost, not a bandwidth one.</p>
+      <p class="corr" style="border-left-color:var(--redline)"><b>And the real byte
+        story is one I missed entirely.</b> The homepage pulls <b>2.19 MB of media</b> —
+        two autoplaying MP4 trailers (971,771 B and 859,203 B) behind two JPEG posters
+        (180,943 B and 179,156 B). That is 55× the compressed HTML. The heavy thing on
+        this page was never the SVG.</p>
+      <p class="ev"><b>Measured:</b> 241,709 B uncompressed · 206,316 B SVG · 16
+        elements · largest 21,607 B / 96 paths · <b>39,547 B transferred (br)</b> ·
+        plus 2,191,073 B of media. Composition independently confirmed from the
+        repository by a second party using a different instrument; all four figures
+        matched exactly.</p></div>
   </div>
 
   <div class="finding">
@@ -551,13 +581,37 @@ footer p{max-width:70ch}
   <div class="finding">
     <div class="fnum">F11</div>
     <div><h3>You deleted the 3D while a rival shipped it<span class="chip c-warn">Warning</span></h3>
-      <p>Your changelog, 20 August: <em>"Our share cards advertised a 3D model we deleted,
-        and walls we never had."</em> Correcting the share card was right. Deleting the
-        model was a strategic error — EQL Tools now leads with "Explore Norrath in 3D."</p>
-      <p>You are already deriving floor plans from the game's own mesh. You are one
-        WebGL canvas away from the most visually arresting feature in this entire field,
-        and you threw the asset away for accuracy reasons that a "geometry: Tier 4,
-        mined" badge would have resolved in a line of markup.</p></div>
+      <p><s>Your changelog, 20 August: "Our share cards advertised a 3D model we deleted,
+        and walls we never had." … you threw the asset away for accuracy reasons that a
+        "geometry: Tier 4, mined" badge would have resolved in a line of markup.</s></p>
+      <p class="corr"><b>Correction, 31 Aug 2026 — the mechanism claim is withdrawn.</b>
+        I read a one-line headline in the homepage's "What changed" strip and treated it
+        as the reason. It is not. Following <span class="mono">sources.html#changelog</span>
+        — a link I had and did not open — the 20 Aug entry is a correction to
+        <em>share cards</em>, and it covers <em>two unrelated</em> errors: a raids card
+        still advertising a model already withdrawn on <b>17 August</b>, and a dungeons
+        card claiming "walls drawn from the game's own files" when the geometry holds
+        walkable-floor outlines and <em>"the word 'wall' does not appear anywhere in the
+        geometry we hold."</em> I merged two corrections into one sentence and inferred a
+        motive from the merger. <b>The public record does not state why the model was
+        withdrawn at all.</b></p>
+      <p class="corr" style="border-left-color:var(--rule2)"><b>Director-supplied,
+        31 Aug, not independently verified —</b> the model was withdrawn because the
+        tactic it depicted (pulling the boss down to island 7) was inherited Project 1999
+        text, contradicted by a collaborator who has killed that boss about ten times and
+        always where it spawns. The stated principle: <em>"a drawing is an assertion"</em>
+        — a model carries more conviction than the same claim in prose, so it needs more
+        evidence, not less. That is coherent with this site's own published tiers, where
+        T5 is "Inherited classic prose · Project 1999 text." A geometry badge would not
+        have fixed a false tactic, because the falsehood was in the fight, not the walls.
+        I accept the correction.</p>
+      <p><strong>What stands, as a separate argument:</strong> you derive walkable-floor
+        outlines from the game's own meshes, and EQL Tools now leads with "Explore Norrath
+        in 3D." The pipeline exists and the field has moved. Ship a zone atlas — but the
+        principle above is the design constraint, not an objection: <b>let it assert
+        geometry only.</b> Walkable-floor outlines, tier-badged, with recorded
+        <span class="mono">/loc</span> pins. No routes, no pull paths, no tactics — those
+        are prose claims and must not borrow a drawing's authority.</p></div>
   </div>
 
   <div class="finding">
@@ -567,6 +621,31 @@ footer p{max-width:70ch}
         roughly 4 KB of rules duplicated across 441 pages that could be cached once.
         Minor beside the rest of this list, but it is the same instinct as the hero SVG:
         paying repeatedly for something that should be paid for once.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F13</div>
+    <div><h3>Your Cache-Control headers are concatenated, not replaced<span class="chip c-ser">Serious</span></h3>
+      <p>Added 31 Aug 2026, after delivery. Nobody asked for this one.</p>
+      <p>Every static asset returns a single <span class="mono">Cache-Control</span> line
+        carrying <em>two or three stacked, conflicting policies</em>:</p>
+      <p class="ev"><span class="mono">assets/site.css</span>, <span class="mono">site.js</span>,
+        <span class="mono">fonts/fonts.css</span> →<br>
+        <b>public, max-age=0, must-revalidate, public, max-age=3600</b><br><br>
+        <span class="mono">assets/media/*.jpg</span> →<br>
+        <b>public, max-age=0, must-revalidate, public, max-age=3600, public,
+        max-age=31536000, immutable</b></p>
+      <p>The restrictive policy is first and wins. Your filenames
+        (<span class="mono">site.css?v=0ebb828c</span>,
+        <span class="mono">sky-ledger-poster.af5c97c2.jpg</span>) are content-hashed, so a
+        year-long immutable cache was plainly intended — and the header defeats it. The
+        <span class="mono">immutable</span> directive you wrote is never reached.</p>
+      <p>Stated precisely, because I have already overstated one performance claim in
+        this document: ETags are present and revalidation returns
+        <span class="mono">304</span> at 0 bytes, so the cost is <em>latency, not
+        bandwidth</em> — one conditional round-trip per asset per navigation, on a site
+        where nothing about those assets has changed. Cheap to fix, and it makes the
+        caching you already designed actually work.</p></div>
   </div>
 </section>
 
