@@ -8,6 +8,7 @@ MMORPG genre.
 |---|---|
 | `norrath-unmeasured.html` | The brief. Publishable page; also the deliverable artifact. |
 | `AUDIT-EVIDENCE.md` | Raw evidence log — every measured figure and its provenance. |
+| `EQL-Source-Audit.html` | **Standalone, unpublished copy.** Complete HTML document — open it directly in any browser, no server and no publishing involved. This is the file to hand to someone else. |
 
 ## Headline findings
 
