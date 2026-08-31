@@ -1,0 +1,974 @@
+<title>Norrath, Unmeasured</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+/* ═══ CYANOTYPE PLATE ═══════════════════════════════════════════════════════
+   Dark-first by design: this is a survey plate, and a plate is blue.
+   :root carries the dark set; light is redefined under prefers-color-scheme
+   AND under the explicit stamp, so the toggle wins in both directions.
+   Every text token clears 4.5:1 on the darkest surface it is drawn on;
+   --rule clears 2.3:1 and --rule2 clears 3.05:1 (WCAG 1.4.11) in BOTH themes.
+   Solved numerically, not chosen by eye.                                     */
+:root{
+  --g0:#071523; --g1:#0D2137; --g2:#143049;
+  --rule:#376896;            /* 2.31:1 */
+  --rule2:#467CAF;           /* 3.08:1 */
+  --ink:#EAF2FA;             /* 12.00 on g2 */
+  --txt:#CFDEEC;             /*  9.89 */
+  --mut:#9DB3C9;             /*  6.28 */
+  --faint:#7F98B1;           /*  4.54 */
+  --chalk:#B8D4EE;
+  --redline:#FF6A54;         /*  4.80 */
+  --amber:#EDB44E;           /*  7.26 */
+  --verdigris:#4FCBA4;       /*  6.72 */
+  --on-redline:#0B1016;      /* dark ink on the light dark-theme redline */
+  --grid:rgba(70,124,175,.20);
+  --shadow:0 1px 0 rgba(0,0,0,.4);
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:104px;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --g0:#E9EFF5; --g1:#F6F9FC; --g2:#DCE7F1;
+    --rule:#789CBB; --rule2:#6286A7;
+    --ink:#08192B; --txt:#1D3A56; --mut:#41627F; --faint:#4E6A82;
+    --chalk:#2A4E70;
+    --redline:#BB2814; --amber:#7E5A0E; --verdigris:#0F6E52;
+    --on-redline:#F6F9FC;    /* light ink on the dark light-theme redline */
+    --grid:rgba(98,134,167,.22);
+    --shadow:0 1px 0 rgba(255,255,255,.7);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --g0:#E9EFF5; --g1:#F6F9FC; --g2:#DCE7F1;
+  --rule:#789CBB; --rule2:#6286A7;
+  --ink:#08192B; --txt:#1D3A56; --mut:#41627F; --faint:#4E6A82;
+  --chalk:#2A4E70;
+  --redline:#BB2814; --amber:#7E5A0E; --verdigris:#0F6E52;
+  --on-redline:#F6F9FC;
+  --grid:rgba(98,134,167,.22);
+  --shadow:0 1px 0 rgba(255,255,255,.7);
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--g0); color:var(--txt);
+  font-family:Spectral,Georgia,"Times New Roman",serif;
+  font-size:17px; line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:756px;margin:0 auto;padding:0 var(--s3)}
+.col{max-width:none}
+
+h1,h2,h3,h4,.disp{font-family:Archivo,"Helvetica Neue",Arial,sans-serif;text-wrap:balance;color:var(--ink)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+a{color:var(--ink);text-decoration-color:var(--rule2);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--redline)}
+:focus-visible{outline:2px solid var(--redline);outline-offset:3px;border-radius:2px}
+strong{color:var(--ink);font-weight:600}
+em.hl{font-style:normal;color:var(--ink);font-weight:600;
+  border-bottom:2px solid var(--redline);
+  box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* ── label / eyebrow ── */
+.lab{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.19em;text-transform:uppercase;color:var(--faint)}
+
+/* ── HERO ──────────────────────────────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule2)}
+#plate{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:.55}
+.hero-in{position:relative;padding:var(--s5) 0 var(--s4)}
+.hero h1{
+  font-size:clamp(3.2rem,10.5vw,8.2rem); line-height:.86;
+  font-variation-settings:"wdth" 112,"wght" 800;
+  letter-spacing:-.035em; margin:var(--s3) 0 0; color:var(--ink);
+}
+.hero h1 .un{color:var(--redline);display:block}
+.deck{font-size:clamp(1.06rem,2vw,1.3rem);line-height:1.6;color:var(--txt);
+  max-width:60ch;margin:var(--s3) 0 0}
+.rule-hair{height:1px;background:var(--rule);border:0;margin:var(--s4) 0}
+
+/* ── stat strip ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin-top:var(--s5)}
+.stat{padding:var(--s3) var(--s2);
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.stat b{display:block;font-family:Archivo,sans-serif;
+  font-variation-settings:"wdth" 78,"wght" 700;
+  font-size:clamp(2.1rem,5vw,3.1rem);line-height:1;color:var(--redline);
+  font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.stat.q b{color:var(--amber)}
+.stat span{display:block;margin-top:10px;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;line-height:1.5;letter-spacing:.06em;color:var(--mut)}
+
+/* ── sections ── */
+section{padding:var(--s5) 0;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.sec-head{display:flex;align-items:baseline;gap:var(--s2);
+  border-bottom:1px solid var(--rule2);padding-bottom:12px;margin-bottom:var(--s4)}
+.sec-head .n{font-family:"IBM Plex Mono",monospace;font-size:12px;
+  color:var(--redline);font-weight:600;letter-spacing:.1em}
+.sec-head h2{margin:0;font-size:clamp(1.6rem,3.4vw,2.4rem);
+  font-variation-settings:"wdth" 100,"wght" 700;letter-spacing:-.02em;line-height:1.1}
+h3{font-size:1.24rem;font-variation-settings:"wdth" 100,"wght" 650;
+  margin:var(--s4) 0 var(--s1);letter-spacing:-.01em}
+p{margin:0 0 1.15em}
+.lede{font-size:1.16rem;color:var(--ink);line-height:1.62}
+
+/* ── findings ── */
+.finding{display:grid;grid-template-columns:64px 1fr;gap:var(--s3);
+  padding:var(--s3) 0;border-top:1px solid var(--rule)}
+.finding:first-of-type{border-top:1px solid var(--rule2)}
+.fnum{font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  color:var(--faint);padding-top:5px;font-variant-numeric:tabular-nums}
+.finding h3{margin:0 0 6px;font-size:1.19rem}
+.finding p{margin:0 0 .55em;color:var(--txt)}
+.finding p:last-child{margin-bottom:0}
+.chip{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+  font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:3px 7px;border:1px solid currentColor;border-radius:2px;
+  vertical-align:.22em;margin-left:9px}
+.c-crit{color:var(--redline)} .c-ser{color:var(--amber)} .c-warn{color:var(--mut)}
+.ev{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--mut);
+  border-left:2px solid var(--redline);padding:2px 0 2px 13px;margin:12px 0 0;
+  line-height:1.62}
+.ev b{color:var(--ink);font-weight:500}
+
+/* ── charts ── */
+.plate{background:var(--g1);border:1px solid var(--rule);padding:var(--s4) var(--s3);
+  margin:var(--s4) 0}
+.plate-t{font-family:Archivo,sans-serif;font-variation-settings:"wdth" 100,"wght" 650;
+  font-size:1.05rem;color:var(--ink);margin:0 0 4px}
+.plate-s{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint);
+  margin:0 0 var(--s3);letter-spacing:.04em}
+.bars{display:grid;gap:11px}
+.bar-r{display:grid;grid-template-columns:minmax(96px,168px) 1fr auto;gap:var(--s2);
+  align-items:center}
+.bar-l{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--txt);
+  text-align:right;line-height:1.3}
+.bar-t{height:19px;background:var(--g2);position:relative;overflow:hidden;border-radius:0 2px 2px 0}
+.bar-f{height:100%;background:var(--rule2);border-radius:0 3px 3px 0;min-width:3px}
+.bar-r.me .bar-f{background:var(--redline)}
+.bar-r.me .bar-l{color:var(--redline);font-weight:600}
+.bar-v{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--mut);
+  font-variant-numeric:tabular-nums;min-width:62px;text-align:right}
+.bar-r.me .bar-v{color:var(--ink);font-weight:600}
+
+/* split bar (payload) */
+.split{display:flex;height:46px;gap:2px;margin:var(--s2) 0 12px}
+.split div{display:flex;align-items:center;padding:0 12px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:500}
+.sp-a{background:var(--redline);color:var(--on-redline);flex:85.4}
+.sp-b{background:var(--rule2);color:var(--ink);flex:14.6;justify-content:flex-end}
+
+/* ── tables ── */
+.tw{overflow-x:auto;margin:var(--s3) 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:14.5px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+thead th{background:var(--g2);font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--mut);font-weight:500;
+  border-bottom:1px solid var(--rule2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.me{background:color-mix(in srgb,var(--redline) 9%,transparent)}
+tbody tr.me td:first-child{color:var(--redline);font-weight:600}
+td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td b{color:var(--ink)}
+.yes{color:var(--verdigris);font-weight:600} .no{color:var(--redline);font-weight:600}
+.part{color:var(--amber);font-weight:600}
+
+/* ── pillars ── */
+.pillar{border-top:1px solid var(--rule2);padding-top:var(--s3);margin-top:var(--s5)}
+.pillar>.lab{color:var(--redline)}
+.pillar h3{margin-top:6px;font-size:1.5rem;font-variation-settings:"wdth" 100,"wght" 700}
+.moves{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:var(--s2)}
+.moves li{background:var(--g1);border:1px solid var(--rule);border-left:3px solid var(--rule2);
+  padding:var(--s2) var(--s3)}
+.moves li.key{border-left-color:var(--redline);background:var(--g2)}
+.moves h4{margin:0 0 5px;font-size:1.02rem;font-variation-settings:"wdth" 100,"wght" 650}
+.moves p{margin:0;font-size:15px;color:var(--txt)}
+.moves .tag{float:right;font-family:"IBM Plex Mono",monospace;font-size:9.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-left:12px}
+
+/* ── laws ── */
+.laws{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));
+  border-top:1px solid var(--rule);border-left:1px solid var(--rule);margin:var(--s4) 0}
+.law{background:var(--g1);padding:var(--s3);
+  border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.law .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--redline);
+  letter-spacing:.12em}
+.law h4{margin:10px 0 7px;font-size:1.08rem;font-variation-settings:"wdth" 100,"wght" 680;
+  line-height:1.25}
+.law p{margin:0;font-size:14.5px;color:var(--mut);line-height:1.55}
+
+/* ── roadmap ── */
+.phase{display:grid;grid-template-columns:132px 1fr;gap:var(--s3);
+  border-top:1px solid var(--rule);padding:var(--s3) 0}
+.phase:first-of-type{border-top:1px solid var(--rule2)}
+.phase .when{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--redline);
+  font-weight:600;letter-spacing:.05em;padding-top:4px}
+.phase .when span{display:block;color:var(--faint);font-weight:400;margin-top:4px;
+  letter-spacing:.02em}
+.phase h4{margin:0 0 8px;font-size:1.15rem;font-variation-settings:"wdth" 100,"wght" 680}
+.phase ul{margin:0;padding-left:19px;color:var(--txt);font-size:15.2px}
+.phase li{margin:0 0 5px}
+
+/* ── kill list ── */
+.kill{list-style:none;padding:0;margin:var(--s3) 0 0;display:grid;gap:9px}
+.kill li{display:flex;gap:13px;align-items:baseline;font-size:15.5px;
+  border-bottom:1px solid var(--rule);padding-bottom:9px}
+.kill .x{font-family:"IBM Plex Mono",monospace;color:var(--redline);font-weight:600;flex:none}
+
+/* ── callout ── */
+.big{border:1px solid var(--redline);background:color-mix(in srgb,var(--redline) 7%,var(--g1));
+  padding:var(--s4);margin:var(--s4) 0}
+.big .lab{color:var(--redline)}
+.big p:last-child{margin-bottom:0}
+.big .disp{font-size:clamp(1.4rem,3.2vw,2rem);line-height:1.2;margin:12px 0 var(--s2);
+  font-variation-settings:"wdth" 100,"wght" 700;letter-spacing:-.02em}
+
+/* ── toggle ── */
+.tg{position:fixed;top:14px;right:14px;z-index:20;background:var(--g1);
+  border:1px solid var(--rule2);color:var(--mut);border-radius:2px;cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;
+  text-transform:uppercase;padding:8px 11px}
+.tg:hover{color:var(--ink);border-color:var(--redline)}
+
+footer{padding:var(--s4) 0 var(--s5);color:var(--faint);font-size:14px}
+footer p{max-width:70ch}
+
+/* LAST in the cascade on purpose: .laws/.plate/.tw each set `margin: X 0`,
+   whose shorthand zeroes margin-left. Declared here, .bleed wins the left
+   offset while their vertical margins survive. */
+.bleed{width:min(1180px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}
+@media (max-width:720px){
+  .bleed{width:auto;margin-left:0;transform:none}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .hero-in{padding:var(--s5) 0 var(--s4)}
+  .finding{grid-template-columns:1fr;gap:6px}
+  .fnum{padding-top:0}
+  .phase{grid-template-columns:1fr;gap:8px}
+  .bar-r{grid-template-columns:1fr;gap:5px}
+  .bar-l{text-align:left}
+  .bar-v{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+}
+</style>
+
+<button class="tg" id="tg" type="button">Invert plate</button>
+
+<header class="hero">
+  <canvas id="plate" aria-hidden="true"></canvas>
+  <div class="wrap hero-in">
+    <div class="lab">EQL Source &nbsp;·&nbsp; Independent audit &nbsp;·&nbsp; 31 August 2026 &nbsp;·&nbsp; Unsolicited, unaffiliated</div>
+    <h1>Norrath,<span class="un">unmeasured.</span></h1>
+    <p class="deck">You built the most rigorously sourced fan site in the genre and
+      then hid it behind a front door that shows a new visitor nothing they came for.
+      Your rivals are shipping twenty times the data with a tenth of the care, and
+      right now <em class="hl">they are winning</em>.</p>
+
+    <div class="stats bleed">
+      <div class="stat"><b>4.7%</b><span>of the known item space is in your Index</span></div>
+      <div class="stat"><b>85.4%</b><span>of your homepage bytes are decoration</span></div>
+      <div class="stat"><b>0</b><span>images on the homepage of an MMO site</span></div>
+      <div class="stat q"><b>7</b><span>direct rivals, all younger than 60 days</span></div>
+      <div class="stat q"><b>34</b><span>days to establish the default</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ═══ 01 VERDICT ═══ -->
+<section>
+  <div class="sec-head"><span class="n">01</span><h2>The verdict</h2></div>
+  <div class="col">
+    <p class="lede">EQL Source is a <strong>journal</strong> competing in a market that
+      rewards <strong>infrastructure</strong>. It has the best prose and the worst
+      coverage of any site in its field. That is not a stable position, and the window
+      in which it can be corrected is measured in weeks.</p>
+
+    <p>The craft here is real and I want to be precise about it before I take it
+      apart. The palette is derived from DXT1 endpoint colours sampled out of the
+      game's own <span class="mono">.s3d</span> archives — 2.6 million samples — because
+      somebody proved the site was the wrong temperature rather than guessing. Every
+      text token carries its measured contrast ratio in a comment. The changelog
+      publishes corrections that make the project look worse, by name. The Sky Ledger
+      refuses to print a drop rate it cannot measure and prints a bound instead. I have
+      audited a great many sites. Almost none of them are built by someone who thinks
+      this hard.</p>
+
+    <p>And almost none of that reaches a new visitor, because the first screen of
+      eqlsource.com is a manifesto about epistemology rendered in vector line art,
+      and the person who arrived wants to know where a Dark Reaver drops.</p>
+
+    <p>Here is the uncomfortable arithmetic. EverQuest Legends launched on
+      28 July 2026. In the five weeks since, at least seven independent fan
+      sites have shipped for it. One of them, EQLBase, lists
+      <strong>9,360 items, 1,448 spells and 568 zones</strong> and calls itself
+      "VERY early alpha." Your Index lists <strong>435 items across 13 zones</strong>.
+      Another, EQ Legends Tools, ships a Plane of Sky tracker citing the identical
+      95 rewards and 128 turn-in items your Sky Ledger is built on — the same feature,
+      shipped against the same numbers, with an inventory-file upload that is easier to
+      use than reading a combat log. A third ships a 3D zone atlas, while your own
+      changelog records that you <em>deleted</em> your 3D model.</p>
+
+    <p>You are not losing on quality. You are losing on <strong>surface area</strong>
+      and on <strong>presence</strong>, and in a land grab those are the only two
+      things that compound.</p>
+  </div>
+
+  <div class="big">
+    <div class="lab">The single most important sentence in this document</div>
+    <p class="disp">Your sourcing standard is not a reason to publish less.
+      It is the licence to publish far more than anyone else can.</p>
+    <p>Every rival importing 9,000 mined items is quietly lying about their
+      confidence in them. You built a five-tier badge system that would let you import
+      the same 9,000 and mark each one honestly — Tier 4, mined snapshot, stale after
+      a patch — while your 435 surveyed entries stand at Tier 1 and 2 and visibly
+      outrank them. You have been treating the standard as a brake. It is the only
+      engine on the site that can outrun the field.</p>
+  </div>
+</section>
+
+<!-- ═══ 02 WHAT YOU BUILT ═══ -->
+<section>
+  <div class="sec-head"><span class="n">02</span><h2>What you actually built</h2></div>
+  <div class="col">
+    <p>Read blind, from the outside, with no access to your repository: a hand-authored
+      static site of <strong>715 pages</strong> — 441 item pages, 232 named-mob pages,
+      13 dungeon surveys, 8 tools, 7 explainers and a single raid zone. No framework,
+      no database, no build-visible JavaScript beyond a theme toggle and a small
+      site script. Self-hosted Cinzel and IBM Plex Mono. A 1,445-line stylesheet
+      carrying 107 custom properties and an unusual amount of documented reasoning.</p>
+    <p>Navigation reads <span class="mono">Dungeons · Raids · Tools · The Index ·
+      Learn · Accuracy · Search</span>. The tools are the Index, Sky Ledger, 50 Upgrades,
+      a gap engine, a lockout tracker, EQLS Auras, a race-unlock tracker, a race and
+      primary calculator, and a faction impact checker. State is packed into the URL
+      rather than a server. Logs are parsed in the browser and never uploaded. There
+      are no accounts and no analytics of any kind.</p>
+  </div>
+
+  <h3>What is genuinely excellent, and worth defending</h3>
+  <div class="laws bleed">
+    <div class="law"><div class="n">▸ KEEP</div><h4>The prose</h4>
+      <p>"An empty log is not evidence that something is available." Nobody in this
+        genre writes like this. It is the most differentiated asset you own and it
+        cannot be cloned by a rival in a weekend.</p></div>
+    <div class="law"><div class="n">▸ KEEP</div><h4>The tier system</h4>
+      <p>Five sourcing tiers with badges that travel to every page a claim appears on.
+        No competitor has an answer to "how confident are you." Scale it, do not
+        soften it.</p></div>
+    <div class="law"><div class="n">▸ KEEP</div><h4>Measured colour</h4>
+      <p>A palette sampled from the game's own textures, and hairlines raised to clear
+        2.25:1 because an audit proved the old ones were invisible. This is real
+        engineering.</p></div>
+    <div class="law"><div class="n">▸ KEEP</div><h4>Bounds, not zeros</h4>
+      <p>Printing <span class="mono">&lt;28% · 0/9</span> instead of <span class="mono">0%</span>
+        is the most intellectually honest thing on any MMO database anywhere. It is
+        also, as it happens, your path to a moat. See §06.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 03 FINDINGS ═══ -->
+<section>
+  <div class="sec-head"><span class="n">03</span><h2>Findings</h2></div>
+  <p class="col lede">Ordered by severity. Every number below was measured against the
+    live site on 31 August 2026, not inferred.</p>
+
+  <div class="finding">
+    <div class="fnum">F01</div>
+    <div><h3>You are invisible in a genre that runs on icons<span class="chip c-crit">Critical</span></h3>
+      <p>There is not one <span class="mono">&lt;img&gt;</span> element on your homepage.
+        Not an item icon, not a spell icon, not a mob portrait, not a screenshot, not a
+        piece of character art. An MMO player's memory is <em>visual</em> — they recall
+        the orange sword icon long before they recall "A Dark Reaver." Wowhead's entire
+        interface is an icon grid. Every one of your seven rivals ships item icons.
+        You ship line drawings.</p>
+      <p>This is the single highest-leverage fix available to you, and — this is the
+        maddening part — <strong>you already own the hard half of it</strong>. Your
+        <span class="mono">_build/palette.py</span> already opens the game's
+        <span class="mono">.s3d</span> archives and decodes DXT1 texture blocks. Icons
+        live in those same archives. The pipeline that proved your palette was the wrong
+        temperature is the pipeline that can emit four thousand WebP icons in one pass.</p>
+      <p class="ev"><b>Measured:</b> 0 <span class="mono">&lt;img&gt;</span> tags on
+        <span class="mono">/</span>. One on a typical item page — a floor-plan locator,
+        which is a genuinely good idea nobody else has.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F02</div>
+    <div><h3>Your coverage is a rounding error<span class="chip c-crit">Critical</span></h3>
+      <p>435 indexed items against EQLBase's 9,360 is <strong>4.7%</strong>. Thirteen
+        zones against 568 is <strong>2.3%</strong>. A reference work that answers one
+        question in twenty is not a reference work; it is a sample. The player who
+        misses twice stops coming, and they do not come back to check whether you
+        improved.</p>
+      <p>Depth without breadth loses to breadth without depth, every time, in this
+        specific category. That is not a statement about what <em>should</em> win.</p>
+      <p class="ev"><b>Measured:</b> sitemap.xml → 715 URLs. 441 <span class="mono">/items/</span>,
+        232 <span class="mono">/named/</span>, 13 <span class="mono">/dungeons/</span>,
+        8 <span class="mono">/tools/</span>, 7 <span class="mono">/learn/</span>,
+        1 <span class="mono">/raids/</span>.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F03</div>
+    <div><h3>Six sevenths of your homepage is decoration<span class="chip c-crit">Critical</span></h3>
+      <p>The homepage is 241,709 bytes. Sixteen inline SVGs account for
+        <strong>206,316 of them — 85.4%</strong>. The hero alone is 21,607 bytes of
+        hand-authored path data across 96 paths. The actual text content of the page,
+        the part a human reads, is roughly four kilobytes.</p>
+      <p>You are spending fifty bytes of decoration for every byte of value, on the one
+        page where a stranger decides whether to stay. On a phone on hotel wifi that
+        is a blank screen for several seconds — and mobile is where a Discord link gets
+        opened.</p>
+      <p class="ev"><b>Measured:</b> 241,709 B total · 206,316 B SVG · 16 elements ·
+        largest 21,607 B / 96 paths. The background of this page you are reading is a
+        canvas, drawn by about forty lines of JavaScript, and weighs nothing.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F04</div>
+    <div><h3>You are not where your community lives<span class="chip c-crit">Critical</span></h3>
+      <p>There is no Discord. There is no forum, no comment thread, no account, no way
+        to contribute that does not require a GitHub account and the willingness to
+        file a YAML issue template. That last condition excludes, conservatively,
+        ninety-five percent of the people who play this game.</p>
+      <p>You know this. Your own changelog says, verbatim: <em>"EverQuest communities
+        coordinate in Discord, and a link with no card is a link nobody opens."</em>
+        You diagnosed the problem exactly and then fixed only the Open Graph tags.
+        EQLBase has a Discord. EQ Legends Tools has a Discord and credits submissions
+        through it. You are the only serious project in this field with no room of
+        its own.</p>
+      <p class="ev"><b>Measured:</b> across every page fetched — one GitHub issue link,
+        one GitHub release link, zero Discord/Reddit/YouTube/Twitch URLs.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F05</div>
+    <div><h3>You market your methodology instead of your utility<span class="chip c-ser">Serious</span></h3>
+      <p>The hero says "Norrath, measured," and then three paragraphs about sourcing
+        discipline, then four counters, then thirteen zone cards with ZEM values, and
+        only then the tools. A first-time visitor gets an epistemology lecture before
+        a search box.</p>
+      <p>Nobody arrives at a fan site wanting to know how you know. They arrive wanting
+        to know <em>where the thing drops</em>. They come to trust your rigour on the
+        second visit, having been helped on the first. You have inverted the order, and
+        the section header "Start here" appears roughly two thousand pixels below the
+        top of the page.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F06</div>
+    <div><h3>Your best tool is not on your site, and your homepage contradicts itself<span class="chip c-ser">Serious</span></h3>
+      <p>The hero counter reads <strong>"435 items indexed."</strong> Five hundred pixels
+        below, the 50 Upgrades panel reads <strong>"It holds 3,663 items, 1,713 of them
+        carrying stat values."</strong> Both statements are on the same screen. A visitor
+        who notices concludes you cannot count; a visitor who does not notice simply
+        absorbs the smaller number.</p>
+      <p>The reason is architectural: 50 Upgrades is "built and hosted in its own
+        repository," as is Sky Ledger. Your most impressive work lives off your domain,
+        earning no traffic, no links and no search authority for eqlsource.com. You have
+        the data for 3,663 items and an Index that exposes 435 of them.</p>
+      <p class="ev"><b>The gap is not a data problem. It is a plumbing problem, and it is
+        the cheapest large win on this list.</b></p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F07</div>
+    <div><h3>Nothing brings anyone back tomorrow<span class="chip c-ser">Serious</span></h3>
+      <p>No news, no patch tracking, no economy, no profiles, no leaderboards, no
+        subscriptions, no notifications. The site is a book. Books get read once.</p>
+      <p>Every site that has won this category has a daily hook: Wowhead has news,
+        Raider.IO has your score, poe.ninja has today's prices, Warcraft Logs has last
+        night's parse. You have URL-packed trackers that live in the visitor's bookmarks
+        rather than on your domain — an admirable privacy stance that also means a
+        returning user may never load your site again.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F08</div>
+    <div><h3>Your tools are named for insiders<span class="chip c-ser">Serious</span></h3>
+      <p><span class="mono">Sky Ledger · Gap engine · 50 Upgrades · The Index ·
+        Accuracy · Motes · Contamination</span>. Not one of these tells a stranger what
+        it does. Compare the field: "Item Planner," "Build Planner," "Spell Search,"
+        "BiS Weapons Search," "Plane of Sky Quest Tracker."</p>
+      <p>Poetic naming is a luxury of the incumbent. Wowhead can call something whatever
+        it likes because everyone already knows. You are not the incumbent yet. Names
+        should be descriptions now and can become poetry later.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F09</div>
+    <div><h3>You are flying blind<span class="chip c-ser">Serious</span></h3>
+      <p>No analytics of any kind — no Plausible, no Umami, not even self-hosted log
+        aggregation surfaced anywhere. You have 715 pages and no idea which ones anyone
+        reads, which searches return nothing, or where visitors give up.</p>
+      <p>This is a defensible ethical position taken too far. Privacy-respecting,
+        cookieless, self-hosted analytics measure pages, not people, and violate nothing
+        you have promised. Without them, every decision below is a guess — including,
+        I would gently note, your own decisions about what to build next.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F10</div>
+    <div><h3>A 100.5 MB download, in 2026<span class="chip c-warn">Warning</span></h3>
+      <p>The Sky Ledger overlay ships as a hundred-megabyte Windows zip from a GitHub
+        release. That is a runtime, not a tool. The in-browser version is 178 KB and is
+        the one you should lead with in every context; the overlay should be the reward
+        for a user already convinced, not the headline call to action.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F11</div>
+    <div><h3>You deleted the 3D while a rival shipped it<span class="chip c-warn">Warning</span></h3>
+      <p>Your changelog, 20 August: <em>"Our share cards advertised a 3D model we deleted,
+        and walls we never had."</em> Correcting the share card was right. Deleting the
+        model was a strategic error — EQL Tools now leads with "Explore Norrath in 3D."</p>
+      <p>You are already deriving floor plans from the game's own mesh. You are one
+        WebGL canvas away from the most visually arresting feature in this entire field,
+        and you threw the asset away for accuracy reasons that a "geometry: Tier 4,
+        mined" badge would have resolved in a line of markup.</p></div>
+  </div>
+
+  <div class="finding">
+    <div class="fnum">F12</div>
+    <div><h3>Per-page inline stylesheets<span class="chip c-warn">Warning</span></h3>
+      <p>Item pages carry their own <span class="mono">&lt;style&gt;</span> block —
+        roughly 4 KB of rules duplicated across 441 pages that could be cached once.
+        Minor beside the rest of this list, but it is the same instinct as the hero SVG:
+        paying repeatedly for something that should be paid for once.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 04 THE FIELD ═══ -->
+<section>
+  <div class="sec-head"><span class="n">04</span><h2>The field</h2></div>
+  <p class="col lede">Seven direct competitors, none older than the game. This is a land
+    grab, and it is roughly a third over.</p>
+
+  <div class="plate bleed">
+    <p class="plate-t">Indexed items, EQL fan sites</p>
+    <p class="plate-s">Counts as published by each site, 31 Aug 2026 · EQL Source highlighted</p>
+    <div class="bars">
+      <div class="bar-r"><div class="bar-l">EQLBase</div><div class="bar-t"><div class="bar-f" style="width:100%"></div></div><div class="bar-v">9,360</div></div>
+      <div class="bar-r"><div class="bar-l">50 Upgrades<br><span class="mono" style="font-size:10px;color:var(--faint)">(yours, off-site)</span></div><div class="bar-t"><div class="bar-f" style="width:39.1%"></div></div><div class="bar-v">3,663</div></div>
+      <div class="bar-r me"><div class="bar-l">EQL Source Index</div><div class="bar-t"><div class="bar-f" style="width:4.65%"></div></div><div class="bar-v">435</div></div>
+    </div>
+    <p class="plate-s" style="margin:var(--s3) 0 0">Your own planner holds eight times
+      what your own Index exposes. The data exists. It is on the wrong domain.</p>
+  </div>
+
+  <div class="plate bleed">
+    <p class="plate-t">Homepage payload composition</p>
+    <p class="plate-s">eqlsource.com/ · 241,709 bytes total, measured 31 Aug 2026</p>
+    <div class="split">
+      <div class="sp-a">85.4%&nbsp; — 206,316 B of inline SVG decoration</div>
+      <div class="sp-b">14.6%</div>
+    </div>
+    <p class="plate-s" style="margin:0">The 14.6% on the right contains every word,
+      every link, every number and the entire navigation.</p>
+  </div>
+
+  <h3>Direct competitors — all shipped within 60 days</h3>
+  <div class="tw bleed"><table>
+    <thead><tr><th>Site</th><th>Scale</th><th>Distinctive hook</th><th>Icons</th><th>Discord</th><th>3D</th></tr></thead>
+    <tbody>
+      <tr><td><b>EQLBase</b></td><td class="num">9,360 items<br>1,448 spells<br>568 zones</td><td>"Collector" log reader produces <b>Legends observed</b> badges; contributors credited</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+      <tr><td><b>EQ Legends Tools</b></td><td class="num">8 tools<br>v4.8.0, 31 Aug</td><td>Plane of Sky tracker on the <b>same 95 / 128</b> figures as Sky Ledger; inventory.txt upload; 4-item compare</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td></tr>
+      <tr><td><b>EQL Tools</b></td><td class="num">14 tools</td><td><b>Norrath3D</b> zone atlas, log parser, Trio Builder, Spellmaster, AA planner</td><td class="part">Some</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+      <tr><td><b>EQL Build Forge</b></td><td class="num">Full DB</td><td>Builds, spells, AAs, vendors, route exits, patch notes</td><td class="part">Some</td><td class="part">—</td><td class="no">No</td></tr>
+      <tr><td><b>EQLegendsDB</b></td><td class="num">Profiles</td><td>Character profiles with <b>Twitch inventory sync</b></td><td class="yes">Yes</td><td class="part">—</td><td class="no">No</td></tr>
+      <tr><td><b>EQL Character Builder</b></td><td class="num">14 tabs</td><td>Fully offline planner, zero connections</td><td class="part">—</td><td class="part">—</td><td class="no">No</td></tr>
+      <tr><td><b>everquestlegends.wiki</b></td><td class="num">Guides</td><td>Hero video galleries, launch/news hub, build archetypes</td><td class="yes">Yes</td><td class="part">—</td><td class="no">No</td></tr>
+      <tr class="me"><td>EQL Source</td><td class="num">435 items<br>232 named<br>13 zones</td><td><b>Five-tier sourcing, dated claims, measured bounds</b> — unmatched, and invisible above the fold</td><td class="no">No</td><td class="no">No</td><td class="no">Deleted</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The sites that won their categories, and why</h3>
+  <div class="tw bleed"><table>
+    <thead><tr><th>Site</th><th>Game</th><th>The mechanism that made it default</th></tr></thead>
+    <tbody>
+      <tr><td><b>Wowhead</b></td><td>WoW</td><td>Icons and hover tooltips everywhere, plus a comment under every entry. The tooltip embed escaped the domain — every WoW link on the internet became a Wowhead surface.</td></tr>
+      <tr><td><b>OSRS Wiki</b></td><td>RuneScape</td><td>41,000 articles and 2.6 million edits from roughly 2,000 active editors, with live Grand Exchange prices and calculators. <b>Anyone can edit</b> — the community builds it faster than any team could.</td></tr>
+      <tr><td><b>Raider.IO</b></td><td>WoW</td><td>Gave every player a <b>number they own</b>. Profiles, scores, guild recruitment. Identity is the return hook.</td></tr>
+      <tr><td><b>Warcraft Logs / Archon</b></td><td>WoW</td><td>Upload a log → get analysis → analysis becomes guides → guides become recruitment. A flywheel where users supply the raw material.</td></tr>
+      <tr><td><b>Raidbots</b></td><td>WoW</td><td>One job, executed perfectly: gear simulation as a service. Proof a single tool can be a destination.</td></tr>
+      <tr><td><b>poe.ninja</b></td><td>Path of Exile</td><td>Live economy plus builds mined from the ladder. <b>Data nobody else has</b>, refreshed constantly.</td></tr>
+      <tr><td><b>FFXIV Teamcraft</b></td><td>FFXIV</td><td>Absorbed every adjacent workflow — crafting, gathering, lists, inventory — until leaving the site cost more than staying.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The four laws these sites obey and you do not</h3>
+  <div class="laws bleed">
+    <div class="law"><div class="n">LAW 01</div><h4>The icon is the interface</h4>
+      <p>Players navigate by image before text. A database without icons reads as a
+        spreadsheet, and a spreadsheet is something you close.</p></div>
+    <div class="law"><div class="n">LAW 02</div><h4>The tooltip is the distribution</h4>
+      <p>The winners stopped being websites and became a layer other people's pages
+        render. Wowhead's embed is why it is unkillable.</p></div>
+    <div class="law"><div class="n">LAW 03</div><h4>Identity creates return</h4>
+      <p>A profile, a score, a saved set — something the player owns and points at.
+        Bookmarked URL state is not ownership; it is a receipt.</p></div>
+    <div class="law"><div class="n">LAW 04</div><h4>The community must be able to write</h4>
+      <p>Read-only sites lose to editable ones on a long enough timeline. 2.6 million
+        edits is not a team; it is a permission model.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 05 PROPOSAL ═══ -->
+<section>
+  <div class="sec-head"><span class="n">05</span><h2>The proposal</h2></div>
+  <p class="col lede">Five pillars. Ordered so that each one makes the next cheaper.
+    Items marked <span class="mono" style="color:var(--redline)">KEYSTONE</span> are the
+    ones that change the trajectory; everything else is support.</p>
+
+  <div class="pillar">
+    <div class="lab">Pillar I</div>
+    <h3>The visual layer — stop being invisible</h3>
+    <p class="col">The goal is that a stranger landing on any page of this site in
+      2026 recognises within one second that it is about a game, and within three that
+      it is the best-made site about that game. Right now it reads, at a glance, as a
+      technical standards document.</p>
+    <ul class="moves">
+      <li class="key"><span class="tag">Keystone</span><h4>Extract every icon from the client archives</h4>
+        <p>Extend the <span class="mono">.s3d</span> DXT1 decoder you already wrote for
+          the palette study to emit item, spell and status icons as WebP, plus a sprite
+          atlas. Put an icon on every row of the Index, every drop list, every planner
+          slot, every result. This is one build step against tooling you already own, and
+          it is worth more than the next ten things on this list combined.</p></li>
+      <li class="key"><span class="tag">Keystone</span><h4>Ship an embeddable tooltip</h4>
+        <p>A sub-5 KB script that turns any <span class="mono">eqlsource.com/items/…</span>
+          link on any forum, wiki or Discord-adjacent page into a rich card with icon,
+          stats, drop source <em>and the sourcing tier badge</em>. This is how Wowhead
+          became infrastructure. It also carries your one real differentiator —
+          confidence — to every place your link is pasted.</p></li>
+      <li><h4>Rebuild the hero around the product</h4>
+        <p>Delete the 206 KB of path data. Lead with a search field that actually
+          searches, over a cheap canvas or WebGL ground. The current hero costs fifty
+          times what it communicates.</p></li>
+      <li><h4>Restore 3D, badged honestly</h4>
+        <p>A WebGL zone atlas: orbit, floor toggles, named-mob pins plotted from recorded
+          <span class="mono">/loc</span>, drop overlays on click. You already derive the
+          floor plans from mesh. Mark the geometry Tier 4 and ship it — that is precisely
+          what the tier system is for.</p></li>
+      <li><h4>Rarity, tier and slot colour on every item</h4>
+        <p>Encode two dimensions at once: item quality and source confidence. Nobody else
+          in the genre can show the second one.</p></li>
+      <li><h4>Faces for the 232 named</h4>
+        <p>Rendered mob portraits from the client models, and a zone-entrance screenshot
+          on every survey. Thirteen dungeons currently open with no photograph of the
+          place.</p></li>
+    </ul>
+  </div>
+
+  <div class="pillar">
+    <div class="lab">Pillar II</div>
+    <h3>The data layer — stop being a rounding error</h3>
+    <p class="col">Coverage is the price of admission and you have not paid it. The tier
+      system is what lets you pay it without compromising anything you have promised.</p>
+    <ul class="moves">
+      <li class="key"><span class="tag">Keystone</span><h4>Bulk-import to parity, badged at Tier 4</h4>
+        <p>Ingest the full client item, spell, NPC, zone and faction tables. Every
+          imported row enters at Tier 4 — "mined snapshot, stale after a patch" — dated,
+          and visibly outranked by your surveyed entries. You go from 4.7% coverage to
+          100% overnight <em>and</em> become the only site in the field that tells you
+          which rows to trust. This is not a compromise of the standard. It is the
+          standard finally doing work.</p></li>
+      <li class="key"><h4>Bring 50 Upgrades home</h4>
+        <p>Move the planner onto the domain and wire it to the same item records as the
+          Index. One canonical item table ends the 435-versus-3,663 contradiction,
+          consolidates your search authority, and makes every planner slot a link into
+          a real item page.</p></li>
+      <li><h4>Extend past items</h4>
+        <p>Spells, alternate advancement, factions, quests, tradeskills, vendors,
+          bestiary. Every rival already spans these; you cover one axis of seven.</p></li>
+      <li><h4>Make surveying visibly progressive</h4>
+        <p>Show 13 of 568 zones surveyed as a filling progress bar rather than as a
+          silent absence. An honest gap, displayed, is an invitation to help. An
+          undisplayed gap is just a missing page.</p></li>
+    </ul>
+  </div>
+
+  <div class="pillar">
+    <div class="lab">Pillar III</div>
+    <h3>The return hook — and the one idea that wins outright</h3>
+    <p class="col">This is the section to read twice. Everything above gets you to
+      parity with EQLBase. This is what puts you somewhere none of them can follow.</p>
+
+    <div class="big">
+      <div class="lab">The moat</div>
+      <p class="disp">Be the only game database in the world whose drop rates carry
+        error bars.</p>
+      <p>Drop rates on every MMO database ever built are folklore. Allakhazam's are
+        twenty-year-old guesses; Wowhead's are addon-scraped with no interval published;
+        every EQL rival simply omits them. Meanwhile you already print
+        <span class="mono">&lt;28% · 0/9</span> instead of <span class="mono">0%</span>
+        because you refuse to state what you have not measured.</p>
+      <p>Turn that scruple into the product. Opt-in pooled log donation, parsed
+        client-side, submitting only anonymous kill-and-drop counts — never chat, never
+        character names, never a raw log. Publish every rate as a point estimate with a
+        Wilson confidence interval, a sample size, a date, and a tier badge that rises
+        from Tier 4 to Tier 1 as <span class="mono">n</span> grows. A rate that reads
+        <span class="mono">14.2% ± 3.1 · n=1,847 · Tier 1</span> is a claim no other
+        site in this genre is structurally capable of making, because none of them have
+        spent five weeks building the epistemics to support it.</p>
+      <p>It is a daily-return hook, a contribution ramp, a share object and a
+        defensible technical moat, and it is the natural conclusion of work you have
+        already done.</p>
+    </div>
+
+    <ul class="moves">
+      <li><h4>Character profiles, opt-in and shareable</h4>
+        <p>A URL a player owns and pastes in guild chat. Keep the no-account default;
+          offer a claim-this-profile upgrade for those who want persistence. Identity is
+          Law 03 and you currently satisfy none of it.</p></li>
+      <li class="key"><h4>Patch diffs — "what the game changed"</h4>
+        <p>You already run a public changelog for the site. Run one for <em>Norrath</em>:
+          auto-diff client data between builds and publish what moved — stats, spawns,
+          loot tables, zone values. It is the single most shareable artefact a fan site
+          can produce on patch day, it is fully automatable, and no EQL site is doing it.</p></li>
+      <li><h4>Server progression board</h4>
+        <p>First kills, unlock pace, class-combination distribution. Aggregate,
+          anonymous, and a reason to check in on a Tuesday.</p></li>
+    </ul>
+  </div>
+
+  <div class="pillar">
+    <div class="lab">Pillar IV</div>
+    <h3>The community layer — be reachable</h3>
+    <ul class="moves">
+      <li class="key"><span class="tag">This week</span><h4>Open a Discord and put a bot in it</h4>
+        <p>A bot that answers <span class="mono">/item Dark Reaver</span> inline with an
+          icon, stats, drop source and tier badge puts your database inside every guild
+          server in the game. You correctly identified that this community coordinates in
+          Discord. Go there.</p></li>
+      <li><h4>Web-based finding submission</h4>
+        <p>Five fields, no GitHub account, screenshot upload, routed into the same
+          triage you already run. Keep the log-privacy warning verbatim — it is
+          excellent.</p></li>
+      <li class="key"><h4>Community annotations, tier-governed</h4>
+        <p>Comments are how Wowhead survived and how Allakhazam rotted. You have the
+          only credible answer anyone has proposed: submissions enter at Tier 5, are
+          promoted to Tier 3 on corroboration and Tier 1 on verification, and every
+          annotation displays its tier. You can take user-generated content without
+          becoming a rumour mill, because you built the grading system first.</p></li>
+      <li><h4>A contributor wall</h4>
+        <p>You already credit finders by name — that instinct is right. Make it a page,
+          a count and a badge. People contribute to things that visibly remember them.</p></li>
+    </ul>
+  </div>
+
+  <div class="pillar">
+    <div class="lab">Pillar V</div>
+    <h3>The editorial reframe — sell the tool, keep the voice</h3>
+    <ul class="moves">
+      <li class="key"><h4>Make the front door a search box</h4>
+        <p>Search first, tools second, atlas third, methodology in a badge that links to
+          the full standard. The sourcing story is your closing argument, not your
+          opening one.</p></li>
+      <li><h4>Rename every tool to say what it does</h4>
+        <p><span class="mono">Sky Ledger → Plane of Sky Tracker · 50 Upgrades → Gear
+          Planner · The Index → Item &amp; Mob Database · Gap engine → Upgrade Finder ·
+          Accuracy → How We Source</span>. Keep the poetic names as subtitles. Earn them
+          back once you are the default.</p></li>
+      <li><h4>Ship a command palette</h4>
+        <p><span class="mono">⌘K</span> from any page, searching items, mobs, zones and
+          tools. Cheap, and it makes a static site feel like an application.</p></li>
+      <li><h4>Keep the long-form exactly as it is</h4>
+        <p>"Is it still true?", "Contamination", "Reading a floor plan" — this writing is
+          the best thing on the site and the hardest thing to copy. It belongs in Learn,
+          reached by people you have already helped. Do not dilute it, and do not lead
+          with it.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ 06 ROADMAP ═══ -->
+<section>
+  <div class="sec-head"><span class="n">06</span><h2>Sequence</h2></div>
+  <p class="col lede">Ordered by leverage per week, not by difficulty. The first phase is
+    days of work and closes the widest gaps.</p>
+
+  <div class="phase">
+    <div class="when">PHASE 0<span>Week 1–2</span></div>
+    <div><h4>Stop the bleeding</h4>
+      <ul>
+        <li>Open the Discord. Announce it in every place EQL players already gather.</li>
+        <li>Install cookieless analytics. Start measuring before deciding anything else.</li>
+        <li>Delete the hero SVG; replace with a working search field.</li>
+        <li>Fix the 435 / 3,663 contradiction and rename the tools.</li>
+        <li>Lead the Sky Ledger with the 178 KB browser build, not the 100 MB zip.</li>
+      </ul></div>
+  </div>
+  <div class="phase">
+    <div class="when">PHASE 1<span>Week 3–8</span></div>
+    <div><h4>Become visible and complete</h4>
+      <ul>
+        <li>Icon extraction pipeline; icons on every row site-wide.</li>
+        <li>Bulk import to full client parity, everything badged Tier 4 and dated.</li>
+        <li>Move 50 Upgrades onto the domain against one canonical item table.</li>
+        <li>Discord bot serving item and mob lookups inline.</li>
+        <li>Web-based finding submission replacing GitHub-only.</li>
+      </ul></div>
+  </div>
+  <div class="phase">
+    <div class="when">PHASE 2<span>Month 3–4</span></div>
+    <div><h4>Build the moat</h4>
+      <ul>
+        <li>Pooled drop-rate measurement with confidence intervals and rising tiers.</li>
+        <li>Embeddable tooltip script; publish it and evangelise it.</li>
+        <li>Automated patch diffs on every game build.</li>
+        <li>Opt-in character profiles.</li>
+      </ul></div>
+  </div>
+  <div class="phase">
+    <div class="when">PHASE 3<span>Month 5–6</span></div>
+    <div><h4>Become the destination</h4>
+      <ul>
+        <li>WebGL zone atlas with plotted named mobs and loot overlays.</li>
+        <li>Tier-governed community annotations and the contributor wall.</li>
+        <li>Progression board; installable PWA with offline Index.</li>
+      </ul></div>
+  </div>
+
+  <h3>What to measure, once you can measure anything</h3>
+  <div class="tw bleed"><table>
+    <thead><tr><th>Metric</th><th>Why it is the right one</th><th>90-day target</th></tr></thead>
+    <tbody>
+      <tr><td><b>Zero-result search rate</b></td><td>The purest measure of the coverage gap, straight from real intent</td><td class="num">&lt; 5%</td></tr>
+      <tr><td><b>Index coverage</b></td><td>Items and zones exposed against the client's true totals</td><td class="num">&gt; 95%</td></tr>
+      <tr><td><b>Discord members</b></td><td>Whether you exist where decisions get made</td><td class="num">1,000+</td></tr>
+      <tr><td><b>Distinct contributors / month</b></td><td>Whether Law 04 has started working</td><td class="num">50+</td></tr>
+      <tr><td><b>Tooltip embeds on third-party pages</b></td><td>Whether you have become infrastructure</td><td class="num">Any &gt; 0</td></tr>
+      <tr><td><b>Return visitors within 7 days</b></td><td>Whether anything brings people back</td><td class="num">&gt; 30%</td></tr>
+      <tr><td><b>Rates published with n &gt; 500</b></td><td>The moat, quantified</td><td class="num">200+</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ═══ 07 KILL ═══ -->
+<section>
+  <div class="sec-head"><span class="n">07</span><h2>Kill list</h2></div>
+  <div class="col">
+    <p>Things to stop doing, in order. Removal is faster than building and several of
+      these improve the site the day they are deleted.</p>
+    <ul class="kill">
+      <li><span class="x">✕</span><span>The 206 KB hand-authored hero SVG, and the fifteen others behind it.</span></li>
+      <li><span class="x">✕</span><span>Methodology above the fold. Move it to a badge and a link.</span></li>
+      <li><span class="x">✕</span><span>Thirteen zone cards on the homepage, above the tools people came for.</span></li>
+      <li><span class="x">✕</span><span>GitHub as the only contribution path.</span></li>
+      <li><span class="x">✕</span><span>Flagship tools hosted off the domain.</span></li>
+      <li><span class="x">✕</span><span>A 100 MB download as a primary call to action.</span></li>
+      <li><span class="x">✕</span><span>Per-page duplicated stylesheets across 441 item pages.</span></li>
+      <li><span class="x">✕</span><span>Tool names that require the site to explain them.</span></li>
+      <li><span class="x">✕</span><span>Publishing without measuring anything at all.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══ 08 CLOSE ═══ -->
+<section>
+  <div class="sec-head"><span class="n">08</span><h2>Closing</h2></div>
+  <div class="col">
+    <p class="lede">The hardest thing about this audit is that almost every criticism in
+      it is a criticism of restraint — and restraint is the reason the site is good.</p>
+    <p>You did not ship icons because you had not verified them. You did not import nine
+      thousand items because you could not source them. You deleted the 3D model because
+      the walls were wrong. You will not take comments because comments rot. Every one of
+      those was a defensible call made for an honourable reason, and collectively they
+      have produced a site that is more careful than any competitor and less useful than
+      all of them.</p>
+    <p>The way out is not to abandon the standard. It is to notice that the standard was
+      built precisely so that you could publish uncertain things <em>honestly</em> —
+      and then to actually publish them. Tier 4 is not a confession. It is a licence.
+      Use it, and you can have both the coverage of EQLBase and a credibility none of
+      them can construct, because they did not do the hard part first. You did.</p>
+    <p>EverQuest Legends is thirty-four days old. In ninety days one of these eight sites
+      will be the one people link in Discord without thinking, and the rest will be
+      alternatives. You are currently in second place on craft and last place on
+      everything that decides it. <em class="hl">That is a fixable position, and it will
+      not be fixable for long.</em></p>
+  </div>
+</section>
+
+<footer>
+  <hr class="rule-hair">
+  <p class="lab" style="margin-bottom:12px">Method &amp; provenance</p>
+  <p>Prepared 31 August 2026 as an independent, unsolicited external review. All figures
+    for eqlsource.com were measured directly against the live site on that date —
+    payload byte counts and SVG proportions from the served HTML, page inventory from
+    <span class="mono">sitemap.xml</span>, palette and contrast tokens from
+    <span class="mono">assets/site.css</span>. Competitor figures are as published by
+    each site on 31 August 2026 and are not independently verified; sites in this
+    category revise their counts frequently, and EQLBase self-describes as early alpha.
+    Competitor coverage claims should be re-checked before any decision is made on them.</p>
+  <p style="margin-top:14px">This document has no affiliation with Daybreak Game Company,
+    Game Jawn, Darkpaw Studios, EQL Source, or any site named in it.</p>
+</footer>
+</div>
+
+<script>
+/* The ground: a survey plate being drawn. Canvas rather than path data, because
+   the document argues against shipping 206 KB of hand-authored SVG and would be
+   worth nothing if it did so itself. Redraws on resize; static under
+   prefers-reduced-motion. */
+(function(){
+  var c=document.getElementById("plate"),x=c.getContext("2d"),t=0,raf=null;
+  var still=matchMedia("(prefers-reduced-motion:reduce)").matches;
+  function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+  function size(){
+    var r=c.parentNode.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);
+    c.width=r.width*d; c.height=r.height*d; x.setTransform(d,0,0,d,0,0);
+    return r;
+  }
+  function draw(){
+    var r=size(),w=r.width,h=r.height,g=css("--grid"),ac=css("--rule2");
+    x.clearRect(0,0,w,h);
+    /* fine grid */
+    x.strokeStyle=g; x.lineWidth=1;
+    for(var i=0;i<w;i+=28){x.beginPath();x.moveTo(i+.5,0);x.lineTo(i+.5,h);x.stroke();}
+    for(var j=0;j<h;j+=28){x.beginPath();x.moveTo(0,j+.5);x.lineTo(w,j+.5);x.stroke();}
+    /* contour rings — a plotted survey station, drifting slowly */
+    var cx=w*0.78, cy=h*0.42;
+    x.strokeStyle=ac; x.globalAlpha=.34;
+    for(var k=0;k<7;k++){
+      var rad=48+k*46+Math.sin(t/900+k*.7)*7;
+      x.lineWidth=k===0?1.6:1;
+      x.beginPath();
+      for(var a=0;a<=Math.PI*2+.01;a+=.09){
+        var wob=1+Math.sin(a*3+k*1.3+t/1400)*.055+Math.cos(a*5-k)*.03;
+        var px=cx+Math.cos(a)*rad*wob, py=cy+Math.sin(a)*rad*wob*.72;
+        a===0?x.moveTo(px,py):x.lineTo(px,py);
+      }
+      x.closePath(); x.stroke();
+    }
+    /* the station mark */
+    x.globalAlpha=.85; x.lineWidth=1.4;
+    x.beginPath(); x.arc(cx,cy,6,0,Math.PI*2); x.stroke();
+    x.beginPath(); x.moveTo(cx-16,cy); x.lineTo(cx+16,cy);
+    x.moveTo(cx,cy-16); x.lineTo(cx,cy+16); x.stroke();
+    x.globalAlpha=1;
+  }
+  function loop(){ t+=16; draw(); raf=requestAnimationFrame(loop); }
+  draw();
+  if(!still) loop();
+  addEventListener("resize",function(){ if(still) draw(); });
+  /* toggle */
+  var b=document.getElementById("tg");
+  b.addEventListener("click",function(){
+    var d=document.documentElement, cur=d.getAttribute("data-theme");
+    if(!cur) cur = matchMedia("(prefers-color-scheme: light)").matches ? "light":"dark";
+    d.setAttribute("data-theme", cur==="light"?"dark":"light");
+    draw();
+  });
+})();
+</script>
