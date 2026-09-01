@@ -1,0 +1,157 @@
+Items EQLBase flags as verified-in-Legends that eqlsource.com's Index does not contain.
+Source: eqlbase.com/data/verified.json (generatedAt 2026-08-28) vs window.__IX__ on
+eqlsource.com/tools/index-search.html, both read 31 Aug 2026. Name-normalised
+(case, articles, punctuation). 146 names had no match. Two were fuzzy near-misses and
+both proved on inspection to be genuinely DIFFERENT items — 'Torn Page of Magi`kot pg. 3'
+vs 'pg. 1', and 'warbone chips' vs 'bone chips' — so all 146 stand as real misses.
+
+NOT ALL OF THESE ARE DEFECTS. verified.json carries no per-item zone, so an unknown
+share of these sit in zones eqlsource has not surveyed, where absence is correct.
+This is a cross-check worklist, not a defect list.
+
+alluring horn
+apothic warband
+arrow
+backpack
+bead necklace
+belt of concordance
+blighted armband
+bloodstone
+bracelet of distortion
+bronze claymore
+bronze collar
+bronze dagger
+bronze long sword
+bronze pauldron
+bronze short sword
+bronze shortened spear
+buckler
+cat's eye agate
+charred dagger
+cloth cap
+cloth cape
+cloth choker
+cloth cord
+cloth gloves
+cloth pants
+cloth sandals
+cloth shawl
+cloth shirt
+cloth veil
+cloth wristband
+collar of undead protection
+damask leggings
+darkmetal holy water sprinkler
+ebon wand
+enchanted fine steel great staff
+essence of a vampire
+ethereal mist vambraces
+eye of urd
+familiar ring
+fine steel dagger
+fine steel great staff
+fine steel long sword
+fine steel morning star
+fine steel rapier
+fine steel short sword
+fine steel two handed sword
+fine steel warhammer
+fipok's head
+fire beetle eye
+ghoulbane
+gilded mistmoore visor
+golden pendant
+guise of the deceiver
+hematite
+hunting bow
+iced bone chips
+imbrued platemail vambraces
+insidious manacle
+iron ration
+iron visor
+ivory
+jade earring
+jade ring
+key of swords
+key of the misplaced
+large bag
+loam encrusted sash
+loam encrusted sleeves
+lustrous russet boots
+lustrous russet bracer
+lustrous russet gauntlets
+lustrous russet greaves
+lustrous russet helm
+lustrous russet vambraces
+malachite
+midnight clad wristbands
+mithril earring
+muddy trinket
+necromancer blood
+parrying dagger
+pearl
+pearl earring
+pearl ring
+platinum ring
+prismatic shield
+pristine giant scarab carapace
+ration
+raw-hide belt
+raw-hide cloak
+raw-hide gloves
+raw-hide leggings
+raw-hide mask
+raw-hide shoulderpads
+raw-hide sleeves
+raw-hide wristbands
+ringmail cape
+ringmail pants
+ringmail sleeves
+rod of understanding
+rune etched vambraces
+rusty axe
+rusty bastard sword
+rusty battle axe
+rusty broad sword
+rusty rapier
+rusty scythe
+rusty shortened spear
+scalp of the ghoul lord
+shadow rage gloves
+shrieking ahlspiess
+silver amulet
+silver earring
+silver stud
+silver-plated bracer
+small cloth shirt
+small magical artifact
+snake egg
+spiderling silk
+splintering club
+steel knuckles
+tarnished ancient tiara
+thaumaturgist's sash
+throwing knife
+topaz
+torn page of magi`kot pg. 3
+traitorous froglok's tongue
+travelers pouch
+troll parts
+troll raider's head
+umbral platemail vambraces
+valorium bracers
+valorium vambraces
+veil of silence
+vermiculated armplates
+visage of the gargoyle
+wand of swiftness
+wand of swords
+warbone chips
+water flask
+water soaked journal
+wooden shield
+worn weighted gloves
+woven gloves
+woven grass amulet
+woven shadow bracer
+woven shadow helm
